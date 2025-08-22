@@ -1,0 +1,45 @@
+body {
+  font-family: sans-serif;
+  max-width: 700px;
+  margin: auto;
+  padding: 20px;
+  background: #f4f4f4;
+}
+
+input, textarea, button {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 16px;
+}
+
+#link-list > div {
+  background: white;
+  margin: 10px 0;
+  padding: 10px;
+  border-left: 4px solid #3b82f6;
+}
+
+a {
+  font-weight: bold;
+  color: #1d4ed8;
+  text-decoration: none;
+}
+
+
+body.dark {
+  background: #121212;
+  color: #fff;
+}
+
+body.dark input, body.dark textarea {
+  background: #1e1e1e;
+  color: white;
+  border: 1px solid #333;
+}
+
+body.dark #link-list > div {
+  background: #222;
+  border-left-color: #facc15;
+}
