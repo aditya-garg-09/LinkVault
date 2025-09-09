@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Folders - LinkVault</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>📁 Manage Folders</h1>
+  <nav>
+    <a href="index.html">← Back to Links</a>
+  </nav>
+  <section id="folders-section">
+    <h2>Folders</h2>
+    <div id="folder-list"></div>
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;">
+      <input type="text" id="new-folder-name" placeholder="New folder name" />
+      <select id="new-folder-tag">
+        <option value="green">🟢</option>
+        <option value="yellow">🟡</option>
+        <option value="red">🔴</option>
+      </select>
+      <button type="button" id="add-folder">Add Folder</button>
+    </div>
+  </section>
+  <script src="folders.js"></script>
+</body>
+</html>

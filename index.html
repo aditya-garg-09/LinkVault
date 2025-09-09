@@ -7,15 +7,24 @@
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>🔗 LinkVault</h1>
+  <h1>🔗 LINKVAULT</h1>
+
+
+  <nav>
+    <a href="folders.html">📁 Manage Folders</a>
+  </nav>
 
   <form id="link-form">
+
     <input type="url" id="url" placeholder="Paste URL here" required />
     <input type="text" id="tags" placeholder="Tags (comma-separated)" />
     <textarea id="note" placeholder="Add notes..."></textarea>
+
+  <label for="folder-select">Folder:</label>
+  <select id="folder-select"></select>
+
     <button type="submit">Save Link</button>
     <button id="toggle-theme">🌙 Toggle Dark Mode</button>
-
   </form>
 
   <input type="text" id="search" placeholder="Search by keyword or tag..." />
