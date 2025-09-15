@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LinkVault - Organize Your Links</title>
+  <meta name="description" content="A modern link management application with folder organization">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🔗</text></svg>">
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
+  <div class="max-w-4xl mx-auto p-6 space-y-8">
+
+    <!-- Header -->
+    <header class="text-center space-y-4">
+      <h1 class="text-4xl font-bold flex items-center justify-center gap-3">
+        🔗 <span class="bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">LinkVault</span>
+      </h1>
+      <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+        Organize and manage your links with smart folders, tags, and powerful search
+      </p>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="flex justify-center">
+      <a href="folders.html"
+         class="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 font-medium hover:text-blue-800 dark:hover:text-blue-300 transition-colors">
+        📁 Manage Folders
+      </a>
+    </nav>
+
+    <!-- Add Link Form -->
+    <section class="bg-white dark:bg-gray-800 shadow-lg rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
+      <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+        ➕ Add New Link
+      </h2>
+
+      <form id="link-form" class="space-y-4">
+        <div>
+          <label for="url" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            URL *
+          </label>
+          <input type="url"
+                 id="url"
+                 name="url"
+                 placeholder="https://example.com"
+                 required
+                 class="input-field" />
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label for="tags" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Tags
+            </label>
+            <input type="text"
+                   id="tags"
+                   name="tags"
+                   placeholder="web development, tools, design"
+                   class="input-field" />
+            <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Separate multiple tags with commas</p>
+          </div>
+
+          <div>
+            <label for="folder-select" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+              Folder
+            </label>
+            <select id="folder-select"
+                    name="folder"
+                    class="input-field">
+              <option value="">No folder</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label for="note" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Notes
+          </label>
+          <textarea id="note"
+                    name="note"
+                    placeholder="Add any notes or description..."
+                    rows="3"
+                    class="input-field resize-none"></textarea>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-3">
+          <button type="submit" class="btn-primary flex-1">
+            💾 Save Link
+          </button>
+          <button id="toggle-theme" type="button" class="btn-secondary">
+            🌙 Toggle Theme
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Search and Filter -->
+    <section class="bg-white dark:bg-gray-800 shadow-lg rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
+      <div class="flex flex-col sm:flex-row gap-4">
+        <div class="flex-1">
+          <label for="search" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Search Links
+          </label>
+          <input type="text"
+                 id="search"
+                 placeholder="Search by URL, tags, or notes..."
+                 class="input-field" />
+        </div>
+      </div>
+    </section>
+
+    <!-- Links List -->
+    <section>
+      <div id="link-list" class="space-y-4">
+        <!-- Links will be populated here -->
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center text-sm text-gray-500 dark:text-gray-400 pt-8">
+      <p>LinkVault - Keep your links organized and accessible</p>
+    </footer>
+
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

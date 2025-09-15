@@ -1,0 +1,258 @@
+-- this file contains the V1 of this project and holds the basic HTML CSS JS 
+
+--- FILE: C:\Users\gadit\OneDrive\Desktop\projects\linkvault\folders.html ---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Folders - LinkVault</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>📁 Manage Folders</h1>
+  <nav>
+    <a href="index.html">← Back to Links</a>
+  </nav>
+  <section id="folders-section">
+    <h2>Folders</h2>
+    <div id="folder-list"></div>
+    <div style="display:flex;gap:8px;align-items:center;margin-bottom:10px;">
+      <input type="text" id="new-folder-name" placeholder="New folder name" />
+      <select id="new-folder-tag">
+        <option value="green">🟢</option>
+        <option value="yellow">🟡</option>
+        <option value="red">🔴</option>
+      </select>
+      <button type="button" id="add-folder">Add Folder</button>
+    </div>
+  </section>
+  <script src="folders.js"></script>
+</body>
+</html>
+
+
+--- FILE: C:\Users\gadit\OneDrive\Desktop\projects\linkvault\folders.js ---
+
+// Folder management JS for folders.html
+const folderList = document.getElementById('folder-list');
+const addFolderBtn = document.getElementById('add-folder');
+const newFolderName = document.getElementById('new-folder-name');
+const newFolderTag = document.getElementById('new-folder-tag');
+
+let folders = JSON.parse(localStorage.getItem('folders') || '[]');
+
+function saveFolders() {
+  localStorage.setItem('folders', JSON.stringify(folders));
+}
+
+function renderFolders() {
+  folderList.innerHTML = '';
+  folders.forEach(folder => {
+    const div = document.createElement('div');
+    div.innerHTML = `${folder.tag === 'red' ? '🔴' : folder.tag === 'yellow' ? '🟡' : '🟢'} <strong>${folder.name}</strong>`;
+    folderList.appendChild(div);
+  });
+}
+
+addFolderBtn.onclick = () => {
+  const name = newFolderName.value.trim();
+  const tag = newFolderTag.value;
+  if (!name) return;
+  if (folders.some(f => f.name === name)) {
+    alert('Folder name already exists!');
+    return;
+  }
+  folders.push({ name, tag });
+  saveFolders();
+  newFolderName.value = '';
+  renderFolders();
+};
+
+renderFolders();
+
+
+--- FILE: C:\Users\gadit\OneDrive\Desktop\projects\linkvault\index.html ---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LinkVault</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <h1>🔗 LINKVAULT</h1>
+
+
+  <nav>
+    <a href="folders.html">📁 Manage Folders</a>
+  </nav>
+
+  <form id="link-form">
+
+    <input type="url" id="url" placeholder="Paste URL here" required />
+    <input type="text" id="tags" placeholder="Tags (comma-separated)" />
+    <textarea id="note" placeholder="Add notes..."></textarea>
+
+  <label for="folder-select">Folder:</label>
+  <select id="folder-select"></select>
+
+    <button type="submit">Save Link</button>
+    <button id="toggle-theme">🌙 Toggle Dark Mode</button>
+  </form>
+
+  <input type="text" id="search" placeholder="Search by keyword or tag..." />
+
+  <div id="link-list"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
+
+
+--- FILE: C:\Users\gadit\OneDrive\Desktop\projects\linkvault\script.js ---
+
+
+// DOM elements
+const form = document.getElementById('link-form');
+const list = document.getElementById('link-list');
+const search = document.getElementById('search');
+const folderSelect = document.getElementById('folder-select');
+
+// Data
+let links = JSON.parse(localStorage.getItem('links') || '[]');
+let folders = JSON.parse(localStorage.getItem('folders') || '[]');
+
+function saveLinks() {
+  localStorage.setItem('links', JSON.stringify(links));
+}
+function saveFolders() {
+  localStorage.setItem('folders', JSON.stringify(folders));
+}
+
+function renderFolders() {
+  // Only update folder select
+  folderSelect.innerHTML = '';
+  folders.forEach((folder, idx) => {
+    const option = document.createElement('option');
+    option.value = folder.name;
+    option.textContent = `${folder.tag === 'red' ? '🔴' : folder.tag === 'yellow' ? '🟡' : '🟢'} ${folder.name}`;
+    folderSelect.appendChild(option);
+  });
+}
+
+function render() {
+  list.innerHTML = '';
+  const query = search.value.toLowerCase();
+  const selectedFolder = folderSelect.value;
+
+  links
+    .filter(link =>
+      (!selectedFolder || link.folder === selectedFolder) &&
+      (
+        link.url.toLowerCase().includes(query) ||
+        link.tags.some(tag => tag.toLowerCase().includes(query)) ||
+        link.note.toLowerCase().includes(query)
+      )
+    )
+    .forEach((link, index) => {
+      const item = document.createElement('div');
+      item.innerHTML = `
+        <a href="${link.url}" target="_blank">${link.url}</a>
+        <p>${link.note}</p>
+        <small>Tags: ${link.tags.join(', ')}</small>
+        <small>Folder: ${link.folder ? link.folder : 'None'}</small>
+        <button onclick="deleteLink(${index})">❌ Delete</button>
+      `;
+      list.appendChild(item);
+    });
+}
+
+form.onsubmit = e => {
+  e.preventDefault();
+  const url = document.getElementById('url').value.trim();
+  const tags = document.getElementById('tags').value.split(',').map(t => t.trim()).filter(Boolean);
+  const note = document.getElementById('note').value;
+  const folder = folderSelect.value || '';
+
+  links.push({ url, tags, note, folder, createdAt: Date.now() });
+  saveLinks();
+  form.reset();
+  render();
+};
+
+
+function deleteLink(index) {
+  links.splice(index, 1);
+  saveLinks();
+  render();
+}
+
+const toggleTheme = document.getElementById('toggle-theme');
+
+toggleTheme.onclick = () => {
+  document.body.classList.toggle('dark');
+  localStorage.setItem('darkMode', document.body.classList.contains('dark'));
+};
+
+if (localStorage.getItem('darkMode') === 'true') {
+  document.body.classList.add('dark');
+}
+
+search.oninput = render;
+folderSelect.onchange = render;
+
+renderFolders();
+render();
+
+
+--- FILE: C:\Users\gadit\OneDrive\Desktop\projects\linkvault\styles.css ---
+
+body {
+  font-family: sans-serif;
+  max-width: 700px;
+  margin: auto;
+  padding: 20px;
+  background: #f4f4f4;
+}
+
+input, textarea, button {
+  display: block;
+  width: 100%;
+  margin: 10px 0;
+  padding: 10px;
+  font-size: 16px;
+}
+
+#link-list > div {
+  background: white;
+  margin: 10px 0;
+  padding: 10px;
+  border-left: 4px solid #3b82f6;
+}
+
+a {
+  font-weight: bold;
+  color: #1d4ed8;
+  text-decoration: none;
+}
+
+
+body.dark {
+  background: #121212;
+  color: #fff;
+}
+
+body.dark input, body.dark textarea {
+  background: #1e1e1e;
+  color: white;
+  border: 1px solid #333;
+}
+
+body.dark #link-list > div {
+  background: #222;
+  border-left-color: #facc15;
+}

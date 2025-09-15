@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Folders - LinkVault</title>
+  <meta name="description" content="Organize your links with custom folders and color-coded tags">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📁</text></svg>">
+</head>
+<body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100 min-h-screen">
+  <div class="max-w-4xl mx-auto p-6 space-y-8">
+
+    <!-- Header -->
+    <header class="text-center space-y-4">
+      <h1 class="text-4xl font-bold flex items-center justify-center gap-3">
+        📁 <span class="bg-gradient-to-r from-green-600 to-blue-600 bg-clip-text text-transparent">Folder Manager</span>
+      </h1>
+      <p class="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+        Create and organize folders to categorize your links with color-coded tags
+      </p>
+    </header>
+
+    <!-- Navigation -->
+    <nav class="flex justify-center">
+      <a href="index.html"
+         class="inline-flex items-center gap-2 text-blue-600 dark:text-blue-400 font-medium hover:text-blue-800 dark:hover:text-blue-300 transition-colors">
+        ← Back to Links
+      </a>
+    </nav>
+
+    <!-- Add Folder Form -->
+    <section class="bg-white dark:bg-gray-800 shadow-lg rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
+      <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+        ➕ Create New Folder
+      </h2>
+
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div class="sm:col-span-2">
+          <label for="new-folder-name" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Folder Name *
+          </label>
+          <input type="text"
+                 id="new-folder-name"
+                 placeholder="Enter folder name..."
+                 class="input-field" />
+        </div>
+
+        <div>
+          <label for="new-folder-tag" class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
+            Color Tag
+          </label>
+          <select id="new-folder-tag" class="input-field">
+            <option value="green">🟢 Green</option>
+            <option value="yellow">🟡 Yellow</option>
+            <option value="red">🔴 Red</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="mt-4 flex flex-col sm:flex-row gap-3">
+        <button type="button"
+                id="add-folder"
+                class="btn-primary flex-1">
+          📁 Create Folder
+        </button>
+        <button id="toggle-theme" type="button" class="btn-secondary">
+          🌙 Toggle Theme
+        </button>
+      </div>
+    </section>
+
+    <!-- Folders List -->
+    <section class="bg-white dark:bg-gray-800 shadow-lg rounded-2xl p-6 border border-gray-200 dark:border-gray-700">
+      <h2 class="text-xl font-semibold mb-4 flex items-center gap-2">
+        📂 Your Folders
+      </h2>
+
+      <div id="folder-list" class="space-y-3">
+        <!-- Folders will be populated here -->
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-center text-sm text-gray-500 dark:text-gray-400 pt-8">
+      <p>Organize your links with custom folders and visual tags</p>
+    </footer>
+
+  </div>
+
+  <script src="js/folders.js"></script>
+</body>
+</html>
